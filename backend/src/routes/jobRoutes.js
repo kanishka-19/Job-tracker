@@ -3,7 +3,7 @@ const { createJob, getJobs, getJobById, updateJob, deleteJob, addInterview, getI
 const { createJobRules, updateJobRules, jobIdParam, listJobsRules} = require('../validators/jobValidator');
 const validate = require('../middleware/validateMiddleware');
 const authMiddleware = require('../middleware/authJWT');
-const Job= require('../models/Job');
+const Job= require('../models/job');
 const ensureOwnership = require('../middleware/ensureOwnership');
 const router = express.Router();
 router.use(authMiddleware);
