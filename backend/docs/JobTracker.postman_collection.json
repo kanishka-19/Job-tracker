@@ -1,0 +1,94 @@
+{
+  "info": { "name": "JobTracker", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/auth/register",
+        "body": { "mode": "raw", "raw": "{\n  \"name\":\"Demo\",\n  \"email\":\"demo@example.com\",\n  \"password\":\"password\"\n}" }
+      }
+    },
+    {
+      "name": "Auth - Login (sets token)",
+      "event": [{ "listen": "test", "script": { "exec": ["var j=pm.response.json(); if(j.accessToken){ pm.environment.set('token', j.accessToken);}"] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"email\":\"demo@example.com\",\n  \"password\":\"password\"\n}" }
+      }
+    },
+    {
+      "name": "Jobs - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/v1/jobs",
+        "body": { "mode": "raw", "raw": "{\n  \"company\":\"ACME\",\n  \"position\":\"SWE\",\n  \"status\":\"applied\"\n}" }
+      }
+    },
+    {
+      "name": "Jobs - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs?status=pending&page=1&limit=10&sort=-createdAt"
+      }
+    },
+    {
+      "name": "Jobs - Get by id",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs/{{jobId}}"
+      }
+    },
+    {
+      "name": "Notes - Add",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs/{{jobId}}/notes",
+        "body": { "mode": "raw", "raw": "{\n  \"body\":\"Followed up via email\"\n}", "options": { "raw": { "language": "json" } } }
+      }
+    },
+    {
+      "name": "Resume - Upload",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs/{{jobId}}/resume",
+        "body": { "mode": "formdata", "formdata": [{ "key": "resume", "type": "file", "src": [] }] }
+      }
+    },
+    {
+      "name": "Resume - Get (presigned URL)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs/{{jobId}}/resume"
+      }
+    },
+    {
+      "name": "Resume - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/jobs/{{jobId}}/resume"
+      }
+    },
+    {
+      "name": "Stats - Get",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/v1/stats"
+      }
+    }
+  ]
+}
