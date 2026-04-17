@@ -23,7 +23,7 @@ export default function ResumeViewer({ jobId, resumeKey = null }) {
       window.open(presigned.url, "_blank", "noopener,noreferrer");
     } else {
       // fallback to backend route
-      const backendUrl = `http://localhost:8080/api/v1/jobs/${encodeURIComponent(jobId)}/resume`;
+      const backendUrl = `${import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1/"}jobs/${encodeURIComponent(jobId)}/resume`;
       window.open(backendUrl, "_blank", "noopener,noreferrer");
     }
   };

@@ -11,7 +11,7 @@ import ResumeUploader from "../../components/ResumeUploader";
 function StatusBadge({ status }) {
   const map = {
     pending: "bg-yellow-100 text-yellow-800",
-    shortlisted: "bg-green-100 text-green-800",
+    applied: "bg-green-100 text-green-800",
     interview: "bg-indigo-100 text-indigo-800",
     rejected: "bg-red-100 text-red-800",
   };
@@ -121,7 +121,7 @@ function ActionsMenu({ job, onView, onEdit, onChangeStatus, onDelete }) {
               <div className="border-t" />
 
               <div className="px-2 py-1 text-xs text-gray-500">Change status</div>
-              {["pending", "shortlisted", "interview", "rejected"].map((s) => (
+              {["pending", "applied", "interview", "rejected"].map((s) => (
                 <button
                   key={s}
                   className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
@@ -332,7 +332,7 @@ export default function Jobs() {
           <select value={status} onChange={(e) => { setPage(1); setStatus(e.target.value); }} className="p-2 border rounded text-sm">
             <option value="all">All</option>
             <option value="pending">Pending</option>
-            <option value="shortlisted">Shortlisted</option>
+            <option value="applied">Applied</option>
             <option value="interview">Interview</option>
             <option value="rejected">Rejected</option>
           </select>
@@ -438,7 +438,7 @@ export default function Jobs() {
 
                             <div>
                               <h4 className="text-sm font-semibold mb-2">Resume</h4>
-                              <ResumeUploader jobId={job._1d} resumeKey={job.resumeKey || null} />
+                              <ResumeUploader jobId={job._id} resumeKey={job.resumeKey || null} />
                             </div>
                           </div>
                         </td>
